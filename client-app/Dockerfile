@@ -1,0 +1,5 @@
+FROM node:18-alpine3.15
+ENV NODE_VERSION 16.15.0
+WORKDIR /cliant-app
+EXPOSE 3000
+ENV CI=true
