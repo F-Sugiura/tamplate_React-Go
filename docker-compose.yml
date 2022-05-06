@@ -1,8 +1,11 @@
 version: '3.9'
 services:
-  web:
-    build: /client-app
+  client-app:
+    build: client-app
     ports:
-      - 5000:5000
+      - 3000:3000
+    volumes:
+      - ./node:/usr/src/app:cached
+    image: client-app
     container_name: client-app
     tty: true
