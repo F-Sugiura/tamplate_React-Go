@@ -9,3 +9,10 @@ services:
     image: client-app
     container_name: client-app
     tty: true
+  server:
+    build: server
+    tty: true
+    ports:
+      - 8080:8080
+    image: server
+    container_name: server
