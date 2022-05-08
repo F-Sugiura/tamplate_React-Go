@@ -6,13 +6,37 @@ services:
       - 3000:3000
     volumes:
       - ./node:/usr/src/app:cached
-    image: client-app
     container_name: client-app
     tty: true
+    networks:
+      - share-network
   server:
     build: server
-    tty: true
     ports:
       - 8080:8080
-    image: server
     container_name: server
+    tty: true
+    networks:
+      - share-network
+  db:
+    container_name: db
+    image: mysql:latest 
+    ports:
+      - 3306:3306
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      TZ: "Asia/Tokyo"
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - share-network
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  share-network:
+    external: true
